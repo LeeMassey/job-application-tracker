@@ -1,6 +1,6 @@
-### Job Application Tracking System
+# Job Application Tracking System
 
-# What this is and how it works:
+## What this is and how it works:
 
 This is a system that stores job post data from Indeed, and allows the user to view/edit the status of jobs interested in or applied to.
 
@@ -16,7 +16,7 @@ I will deploy on vercel with dummy data for people to play around with, and even
 
 Still a work in progress.
 
-# --------------------------
+#
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
