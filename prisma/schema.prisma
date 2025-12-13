@@ -1,0 +1,62 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum ApplicationStatus {
+  Interested
+  Applied
+  FollowUp
+  Interview
+  Offer
+  Rejected
+  Closed
+}
+
+enum PayPeriod {
+  hour
+  year
+  month
+  week
+}
+
+model Application {
+  id               String            @id @default(cuid())
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+
+  status           ApplicationStatus @default(Applied)
+  source           String            @default("Other")
+
+  jobUrl           String
+  companyName      String
+  positionTitle    String
+  location         String
+
+  companyPhone     String?
+  payMin           Int?
+  payMax           Int?
+  payPeriod        PayPeriod?
+  shift            String?
+  hoursPerWeek     Int?
+  jobType          String?
+  workplace        String?
+
+  datePosted       DateTime?
+  dateApplied      DateTime?
+  lastFollowedUpOn DateTime?
+  nextFollowUpOn   DateTime?
+
+  contactName      String?
+  contactEmail     String?
+
+  jobDescription   String?
+  resumeVersion    String?
+  coverLetterVersion String?
+
+  notes            String?
+}

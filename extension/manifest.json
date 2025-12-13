@@ -1,0 +1,33 @@
+{
+    "manifest_version": 3,
+    "name": "Job Capture (Local Tracker)",
+    "version": "0.1.0",
+    "description": "Capture job posting details and save to your local tracker.",
+    "permissions": [
+        "activeTab",
+        "tabs"
+    ],
+    "host_permissions": [
+        "http://localhost:3000/*"
+    ],
+    "action": {
+        "default_title": "Capture Job",
+        "default_popup": "popup.html"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "content.js"
+            ],
+            "run_at": "document_idle"
+        }
+    ],
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "job-capture-local@leebo"
+        }
+    }
+}
