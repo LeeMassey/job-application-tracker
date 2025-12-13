@@ -17,7 +17,6 @@ function coerceStatus(input: unknown): ApplicationStatus | null {
     if (input == null) return null;
     const raw = String(input).trim();
 
-    // Accept friendly UI labels just in case
     if (raw.toLowerCase() === "follow-up needed" || raw.toLowerCase() === "follow up needed") {
         return ApplicationStatus.FollowUp;
     }

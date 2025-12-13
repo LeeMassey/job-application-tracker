@@ -70,7 +70,6 @@ function getJsonLdJobPosting() {
 }
 
 function extractIndeed() {
-    // Title
     const headerTitleNode =
         document.querySelector('[data-testid="jobsearch-JobInfoHeader-title"] h1') ||
         document.querySelector('[data-testid="jobsearch-JobInfoHeader-title"] h2') ||
@@ -85,8 +84,6 @@ function extractIndeed() {
     if (/^jobs\s+in\s+/i.test(positionTitle)) {
         positionTitle = "";
     }
-
-    // Company (ONLY trust Indeed header selectors; do NOT fall back to title parsing on Indeed)
     const companyName =
         textOf('[data-testid="inlineHeader-companyName"] a') ||
         textOf('[data-testid="inlineHeader-companyName"]') ||
@@ -99,7 +96,6 @@ function extractIndeed() {
         textOf('[data-testid="jobsearch-JobInfoHeader-companyLocation"]') ||
         "";
 
-    // Pay (try visible pay chip first)
     const payVisible =
         textOf('[data-testid="jobsearch-JobDetailsSection"] [aria-label*="Pay"]') ||
         textOf('[data-testid="jobsearch-JobDetailsSection"]') || // may include pay line
@@ -108,11 +104,8 @@ function extractIndeed() {
 
     let payMin = null, payMax = null, payPeriod = null;
 
-    // Better: parse JSON-LD if present
     const jp = getJsonLdJobPosting();
     if (jp?.baseSalary) {
-        // baseSalary formats vary; try common shape
-        // baseSalary: { value: { minValue, maxValue, value, unitText } }
         const value = jp.baseSalary.value || jp.baseSalary;
         const unitText = (value?.unitText || value?.value?.unitText || "").toString().toLowerCase();
 
@@ -130,10 +123,8 @@ function extractIndeed() {
         else if (unitText.includes("month")) payPeriod = "month";
     }
 
-    // If JSON-LD didn’t give us pay, parse visible text
     if (payMin === null && payMax === null) {
         const payStr =
-            // Indeed often has pay as a pill near "Job details"
             Array.from(document.querySelectorAll('[data-testid="jobsearch-JobDetailsSection"] *'))
                 .map(textOfEl)
                 .find((t) => /\$/.test(t) && /(hour|year|week|month)/i.test(t)) ||
@@ -147,8 +138,6 @@ function extractIndeed() {
         }
     }
 
-    // Shift / schedule chips
-    // Shift / schedule chips (Indeed)
     let shift = "";
     const shiftSection = Array.from(document.querySelectorAll("h2, h3"))
         .find((h) => /shift and schedule/i.test(h.textContent || ""));
@@ -156,7 +145,6 @@ function extractIndeed() {
     if (shiftSection) {
         const container = shiftSection.parentElement;
         if (container) {
-            // Indeed often uses pill-like items under this heading.
             // Prefer buttons/spans, and force clean spacing.
             const raw = Array.from(container.querySelectorAll("button, span, li"))
                 .map((el) => cleanText(el.textContent))
@@ -182,14 +170,12 @@ function extractIndeed() {
         }
     }
 
-    // Description (Indeed)
     const descEl =
         document.querySelector("#jobDescriptionText") ||
         document.querySelector('[data-testid="jobDescriptionText"]');
 
     let jobDescription = "";
 
-    // Prefer innerText because it preserves spacing/line breaks better than textContent
     if (descEl) {
         jobDescription = cleanText(descEl.innerText || descEl.textContent || "");
     }

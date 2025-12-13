@@ -79,10 +79,9 @@ async function save() {
 
     setMsg("Saved ✔");
 
-    // Give visual confirmation, then close popup
     setTimeout(() => {
         window.close();
-    }, 600);
+    }, 2000);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -96,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch (e) {
             console.error(e);
             setMsg("Could not auto-extract. You can fill manually.", true);
-            // Still fill URL from tab
+
             try {
                 const tab = await getActiveTab();
                 $("jobUrl").value = tab?.url || "";

@@ -455,13 +455,11 @@ export default function Home() {
                       value={r.status}
                       onChange={async (e) => {
                         const next = e.target.value;
-                        // optimistic UI
                         setRows((prev) => prev.map((x) => (x.id === r.id ? { ...x, status: next } : x)));
                         try {
                           await patchRow(r.id, { status: next });
                         } catch (err) {
                           console.error(err);
-                          // revert on error
                           setRows((prev) => prev.map((x) => (x.id === r.id ? { ...x, status: r.status } : x)));
                           alert("Failed to update status");
                         }
@@ -498,8 +496,6 @@ export default function Home() {
                     {r.dateApplied ? new Date(r.dateApplied).toLocaleDateString() : <span style={{ opacity: 0.6 }}>—</span>}
                   </td>
 
-
-                  {/* NOTES column */}
                   <td style={{ padding: 12, borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
                     {r.notes?.trim()
                       ? (
@@ -520,7 +516,6 @@ export default function Home() {
                       : <span style={{ opacity: 0.6 }}>—</span>}
                   </td>
 
-                  {/* ACTION column */}
                   <td style={{ padding: 12, borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
                     <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
                       <a

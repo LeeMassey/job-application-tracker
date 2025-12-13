@@ -15,7 +15,6 @@ export async function OPTIONS() {
 
 export async function GET() {
     const rows = await prisma.application.findMany({
-        // Put Applied (with dates) first, then the rest
         orderBy: [{ dateApplied: "desc" }, { createdAt: "desc" }],
     });
     return cors(NextResponse.json(rows));
@@ -51,7 +50,6 @@ export async function POST(req: Request) {
 
         datePosted: body.datePosted ? new Date(body.datePosted) : null,
 
-        // Only stamp dateApplied when status is Applied
         dateApplied:
             status === ApplicationStatus.Applied
                 ? body.dateApplied
