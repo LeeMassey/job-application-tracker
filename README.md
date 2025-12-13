@@ -12,7 +12,7 @@ Still working on the best way to deploy this for others to try/utilize for thems
 
 Right now, the Next.js / DB parts of the system are run locally with npm run dev at the command line.
 
-I will deploy on vercel with dummy data for people to play around with, and eventually package the browser extensions for others to install to get the UX.
+I will deploy on vercel with dummy data for people to play around with, and eventually package the browser extensions for others to install to get the full UX.
 
 Still a work in progress.
 
