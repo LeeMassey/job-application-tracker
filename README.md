@@ -16,6 +16,16 @@ I will deploy on vercel with dummy data for people to play around with, and even
 
 Still a work in progress.
 
+# Screenshots:
+
+![Screenshot #1](images/job-tracker-1.png)
+
+![Screenshot #1](images/job-tracker-2.png)
+
+![Screenshot #1](images/job-tracker-3.png)
+
+![Screenshot #1](images/job-tracker-4.png)
+
 #
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
